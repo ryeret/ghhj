@@ -1170,114 +1170,131 @@
   color: #ffffff; /* Белый текст */
   border: 1px solid #333333; /* Граница */
 }
-/* Обновленные стили для страницы профиля (инвертированные цвета) */
-#profile-page {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: #1A1A1A; /* Темный фон как у рамки */
-  border: 3px solid #0A0A0A; /* Рамка как был фон */
-  z-index: 1000;
-  overflow-y: auto;
-  box-sizing: border-box;
-}
+ /* Стили для страницы управления профилем */
+    #profile-page {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #1A1A1A;
+      z-index: 1000;
+      overflow-y: auto;
+      box-sizing: border-box;
+      display: none;
+      padding: 20px;
+    }
 
-.profile-management-container {
-  padding: 60px 20px 20px;
-  max-width: 600px;
-  margin: 0 auto;
-  color: #ffffff; /* Белый текст */
-}
+    .profile-management-container {
+      max-width: 600px;
+      margin: 0 auto;
+      color: #ffffff;
+    }
 
-.profile-back-btn {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  background: #0A0A0A; /* Новый цвет кнопки */
-  color: white;
-  border: 2px solid #1A1A1A; /* Граница как был фон */
-  padding: 8px 16px;
-  border-radius: 20px;
-  cursor: pointer;
-  z-index: 1001;
-  font-weight: 600;
-}
-/* Остальные стили из вашего кода */
-#profile-page h1 {
-  font-size: 22px;
-  margin-bottom: 20px;
-  font-weight: bold;
-  color: #e0e0e0;
-}
+    .profile-back-btn {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      background: #0A0A0A;
+      color: white;
+      border: 2px solid #1A1A1A;
+      padding: 8px 16px;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 1001;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
 
-#profile-page .tabs {
-  display: flex;
-  border-bottom: 1px solid #222;
-  margin-bottom: 25px;
-}
+    .profile-back-btn:hover {
+      background: #1A1A1A;
+    }
 
-#profile-page .tab {
-  padding: 10px 20px;
-  color: #777;
-  font-weight: 500;
-  cursor: pointer;
-  transition: color 0.2s;
-}
+    #profile-page h1 {
+      font-size: 22px;
+      margin-bottom: 20px;
+      font-weight: bold;
+      color: #e0e0e0;
+      text-align: center;
+      padding-top: 10px;
+    }
 
-#profile-page .tab.active {
-  color: #fff;
-  border-bottom: 2px solid #aaa;
-}
+    #profile-page .tabs {
+      display: flex;
+      border-bottom: 1px solid #222;
+      margin-bottom: 25px;
+      justify-content: center;
+    }
 
-#profile-page .section {
-  background-color: #111;
-  padding: 15px 20px;
-  border-radius: 12px;
-  margin-bottom: 20px;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.02);
-  cursor: pointer;
-  transition: all 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeInUp 0.4s forwards;
-}
+    #profile-page .tab {
+      padding: 10px 20px;
+      color: #777;
+      font-weight: 500;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
 
-@keyframes fadeInUp {
-  to { opacity: 1; transform: translateY(0); }
-}
+    #profile-page .tab.active {
+      color: #fff;
+      border-bottom: 2px solid #aaa;
+    }
 
-#profile-page .section:hover {
-  background-color: #222;
-}
+    #profile-page .section {
+      background-color: #111;
+      padding: 15px 20px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 0 8px rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
 
-#profile-page .profile-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    #profile-page .section:hover {
+      background-color: #222;
+    }
 
-#profile-page .profile-pic {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1px solid #555;
-}
+    #profile-page .profile-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-#profile-page .field-block {
-  margin-bottom: 12px;
-  background-color: #1a1a1a;
-  padding: 10px 12px;
-  border-radius: 8px;
-  transition: all 0.3s ease;
-  cursor: pointer;
-}
+    #profile-page .profile-pic {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 1px solid #555;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
 
-#profile-page .field-block:hover {
-  background-color: #252525;
-}
+    #profile-page .field-block {
+      margin-bottom: 12px;
+      background-color: #1a1a1a;
+      padding: 10px 12px;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    #profile-page .field-block:hover {
+      background-color: #252525;
+    }
+
+    .profile-name {
+      font-weight: bold;
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .profile-label {
+      color: #aaa;
+      font-size: 14px;
+      margin-bottom: 3px;
+    }
 
 /* Стили для страницы товаров */
 .products-page {
@@ -1626,31 +1643,31 @@
     </div>
   </div>
 
-  <!-- Страница каюты -->
-  <div id="cabinet-page" class="cabinet-page">
+ <!-- Страница каюты -->
+  <div id="cabinet-page" class="cabinet-page fade-in">
     <div class="cabinet-container">
       <div class="avatar-section">
         <div class="avatar" id="avatar">
           <!-- Аватар будет вставлен через JavaScript -->
         </div>
 
-<div class="level-username-wrapper">
+        <div class="level-username-wrapper">
           <div class="level-label" id="level-label">Юнга</div>
-          <div class="username" id="username"><!-- Имя будет вставлено через JavaScript --></div>
+          <div class="username" id="username">Загрузка...</div>
         </div>
       </div>
 
-<div class="cabinet-card">
+      <div class="cabinet-card">
         <div class="card-header">
-          <div>1100 <span class="pirate-currency">P‌</span></div>
-          <button onclick="triggerVibration(); window.open('https://t.me/FOLLENSHAIDbot?startapp=a006ece711fd2bd0', '_blank')">Пополнить</button>
+          <div><span id="balance">0</span> <span class="pirate-currency">P‌</span></div>
+          <button onclick="showPaymentPage()">Пополнить</button>
         </div>
 
         <div class="info-grid">
-          <div class="info-box clickable">
-  Расходы<br>
-  <strong id="expenses-sum">0 <span class="pirate-currency">P</span></strong>
-</div>
+          <div class="info-box clickable" onclick="showExpensesPage()">
+            Расходы<br>
+            <strong id="expenses-sum">0 <span class="pirate-currency">P</span></strong>
+          </div>
           <div class="info-box">Подключённые<br>услуги и сервисы ⚙️⚓️</div>
         </div>
 
@@ -1671,9 +1688,7 @@
         <a href="https://t.me/FOllENSHAID_bot" target="_blank" style="text-decoration: none;">
           <button type="button" onclick="triggerVibration()">Связь с поддержкой</button>
         </a>
-        <a href="https://t.me/FOLLENSHAIDbot?startapp=d339d82edd45176b" target="_blank" style="text-decoration: none;">
-          <button type="button" onclick="triggerVibration()">Управление профилем</button>
-        </a>
+        <button type="button" onclick="showProfilePage()">Управление профилем</button>
       </div>
     </div>
   </div>
@@ -1849,59 +1864,56 @@
   </div>
 </div>
 
-<!-- Страница управления профилем -->
-<div id="profile-page" style="display: none;">
-  <button class="profile-back-btn" onclick="goBackToCabinet()">← Назад</button>
-  
-  <div class="profile-management-container">
-    <h1>Управление профилем</h1>
+ <!-- Страница управления профилем -->
+  <div id="profile-page">
+    <button class="profile-back-btn" onclick="hideProfilePage()">← Назад</button>
+    
+    <div class="profile-management-container">
+      <h1>Управление профилем</h1>
 
-    <div class="tabs">
-      <div class="tab active">Основные данные</div>
-      <div class="tab">Вид профиля</div>
-    </div>
+      <div class="tabs">
+        <div class="tab active">Основные данные</div>
+        <div class="tab">Вид профиля</div>
+      </div>
 
-    <!-- Профиль -->
-    <div class="section profile" tabindex="0" onclick="handleProfileClick('Профиль')">
-      <div class="profile-row">
-        <div class="profile-details">
-          <div class="profile-name" id="profile-username"><!-- Имя будет вставлено через JavaScript --></div>
-          <div class="profile-label">Вольный моряк</div>
-          <div class="profile-label">Номер профиля: <span id="profile-number">•••</span></div>
-          <div class="profile-label">На FollenShaid с <span id="join-date">•••</span></div>
+      <div class="section profile" onclick="handleProfileClick('Профиль')">
+        <div class="profile-row">
+          <div class="profile-details">
+            <div class="profile-name" id="profile-username">Загрузка...</div>
+            <div class="profile-label">Вольный моряк</div>
+            <div class="profile-label">Номер профиля: <span id="profile-number">•••</span></div>
+            <div class="profile-label">На FollenShaid с <span id="join-date">•••</span></div>
+          </div>
+          <div class="profile-pic" id="profile-avatar-img"></div>
         </div>
-        <div class="profile-pic" id="profile-avatar-img"><!-- Аватар будет вставлен через JavaScript --></div>
-      </div>
-    </div>
-
-    <!-- Подтверждение данных -->
-    <div class="section confirmation" tabindex="0">
-      <div class="section-title">Подтверждение данных</div>
-      <div class="field-block" tabindex="0" onclick="handleProfileClick('https://t.me/FOLLENSHAIDbot?startapp=c42bb671a2141229')">
-        <div class="field-label">Для частных лиц</div>
-        <div class="field-value">По документам, личному кабинету в банке или через Госуслуги</div>
       </div>
 
-<div class="field-block" tabindex="0" onclick="handleProfileClick('https://t.me/FOLLENSHAIDbot?startapp=22f807ee776b6229')">
-        <div class="field-label">Для самозанятых</div>
-        <div class="field-value">По профилю на Госуслугах, T-ID или Сбер ID</div>
+      <div class="section confirmation">
+        <div class="section-title">Подтверждение данных</div>
+        <div class="field-block" onclick="handleProfileClick('https://t.me/FOLLENSHAIDbot?startapp=c42bb671a2141229')">
+          <div class="field-label">Для частных лиц</div>
+          <div class="field-value">По документам, личному кабинету в банке или через Госуслуги</div>
+        </div>
+
+        <div class="field-block" onclick="handleProfileClick('https://t.me/FOLLENSHAIDbot?startapp=22f807ee776b6229')">
+          <div class="field-label">Для самозанятых</div>
+          <div class="field-value">По профилю на Госуслугах, T-ID или Сбер ID</div>
+        </div>
+
+        <div class="field-block" onclick="handleProfileClick('Для юридических лиц и ИП')">
+          <div class="field-label">Для юридических лиц и ИП</div>
+          <div class="field-value">По реквизитам или личному кабинету в банке</div>
+        </div>
       </div>
 
-      <div class="field-block" tabindex="0" onclick="handleProfileClick('Для юридических лиц и ИП')">
-        <div class="field-label">Для юридических лиц и ИП</div>
-        <div class="field-value">По реквизитам или личному кабинету в банке</div>
-      </div>
-    </div>
-
-    <!-- Привязка карты -->
-    <div class="section community" tabindex="0" onclick="handleProfileClick('Привязка карты')">
-      <div class="section-title">Привязка банковской карты</div>
-      <div class="field-block" tabindex="0" onclick="handleProfileClick('Введи данные')">
-        <div class="field-value">Введи данные</div>
+      <div class="section community" onclick="handleProfileClick('Привязка карты')">
+        <div class="section-title">Привязка банковской карты</div>
+        <div class="field-block" onclick="handleProfileClick('Введи данные')">
+          <div class="field-value">Введи данные</div>
+        </div>
       </div>
     </div>
   </div>
-</div>
 
 <!-- Страница товаров -->
 <div id="products-page" class="products-page">
@@ -2193,11 +2205,10 @@
     const treasurePage = document.getElementById('treasure-page');
     const storagePage = document.getElementById('storage-page');
     const navItems = document.querySelectorAll('.bottom-nav .nav-item');
-
     // Функция для показа страницы
     function showPage(pageElement) {
       // Список всех страниц
-      const allPages = [mainPage, cabinetPage, treasurePage, storagePage];
+      const allPages = [mainPage, cabinetPage, treasurePage, storagePage,];
       
       // Скрываем все страницы
       allPages.forEach(page => {
@@ -2541,6 +2552,148 @@
       document.getElementById('categoriesDropdown').classList.remove('active');
     };
     
+// Управление страницами
+  function showExpensesPage() {
+    document.getElementById('expenses-page').style.display = 'block';
+    document.getElementById('cabinet-page').style.display = 'none';
+    triggerVibration();
+    initExpensesCalendar();
+  }
+
+  function hideExpensesPage() {
+    document.getElementById('expenses-page').style.display = 'none';
+    document.getElementById('cabinet-page').style.display = 'block';
+    triggerVibration();
+  }
+
+  function showProfilePage() {
+    document.getElementById('profile-page').style.display = 'block';
+    document.getElementById('cabinet-page').style.display = 'none';
+    triggerVibration();
+  }
+
+  function hideProfilePage() {
+    document.getElementById('profile-page').style.display = 'none';
+    document.getElementById('cabinet-page').style.display = 'block';
+    triggerVibration();
+  }
+
+  function showPaymentPage() {
+    document.getElementById('payment-page').style.display = 'block';
+    document.getElementById('cabinet-page').style.display = 'none';
+    triggerVibration();
+    initPaymentPage();
+  }
+
+  function hidePaymentPage() {
+    document.getElementById('payment-page').style.display = 'none';
+    document.getElementById('cabinet-page').style.display = 'block';
+    triggerVibration();
+  }
+
+  function showAddCardModal() {
+    document.getElementById('modal').classList.add('show');
+    document.getElementById('cardNumberInput').focus();
+    // Очищаем поля при открытии
+    document.getElementById('cardNumberInput').value = '';
+    document.getElementById('cardHolderInput').value = '';
+    document.getElementById('cardExpiryInput').value = '';
+    document.getElementById('cardCvcInput').value = '';
+    document.getElementById('cardBrand').textContent = '';
+    document.getElementById('cardBrand').classList.remove('show');
+    triggerVibration();
+  }
+
+  function hideAddCardModal() {
+    document.getElementById('modal').classList.remove('show');
+  }
+
+  function handleProfileClick(action) {
+    triggerVibration();
+    if (typeof action === 'string' && action.startsWith('http')) {
+      if (window.Telegram?.WebApp?.openLink) {
+        Telegram.WebApp.openLink(action);
+      } else {
+        window.open(action, '_blank');
+      }
+    } else {
+      console.log("Action:", action);
+    }
+  }
+
+  // Логика календаря расходов
+  let currentDate = new Date();
+  
+  function initExpensesCalendar() {
+    updateCalendar();
+    // Здесь можно добавить загрузку данных о расходах
+  }
+  
+  function updateCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    document.getElementById('current-month').textContent = 
+      new Date(year, month).toLocaleDateString('ru-RU', { 
+        month: 'long', 
+        year: 'numeric' 
+      });
+    
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    
+    const calendarBody = document.getElementById('calendar-body');
+    calendarBody.innerHTML = '';
+    
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+      if (date > lastDay.getDate()) break;
+      
+      const row = document.createElement('tr');
+      
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement('td');
+        
+        if (i === 0 && j < firstDay.getDay()) {
+          // Пустые ячейки перед первым днем месяца
+          cell.textContent = '';
+        } else if (date > lastDay.getDate()) {
+          // Пустые ячейки после последнего дня месяца
+          cell.textContent = '';
+        } else {
+          cell.textContent = date;
+          
+          // Подсветка текущего дня
+          const today = new Date();
+          if (date === today.getDate() && 
+              month === today.getMonth() && 
+              year === today.getFullYear()) {
+            cell.style.border = '1px solid #d4af37';
+            cell.style.boxShadow = '0 0 5px #d4af37';
+          }
+          
+          date++;
+        }
+        
+        row.appendChild(cell);
+      }
+      
+      calendarBody.appendChild(row);
+    }
+  }
+  
+  function prevMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    updateCalendar();
+    triggerVibration();
+  }
+  
+  function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    updateCalendar();
+    triggerVibration();
+  }
+
     window.hideProductsPage = hideProductsPage;
   </script>
 </body>
