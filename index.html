@@ -2417,7 +2417,7 @@
   }
 
 
-   // ===== ФУНКЦИОНАЛ СВАЙПА ДЛЯ ОТКРЫТИЯ СТРАНИЦЫ ТОВАРОВ =====
+     // ===== ФУНКЦИОНАЛ СВАЙПА ДЛЯ ОТКРЫТИЯ СТРАНИЦЫ ТОВАРОВ =====
     let startY, currentY, isSwipingUp = false;
     let productsPageVisible = false;
     const productsPage = document.getElementById('products-page');
@@ -2520,7 +2520,7 @@
       isSwipingUp = false;
     });
 
-// ===== ФУНКЦИИ ДЛЯ СТРАНИЦЫ ТОВАРОВ =====
+    // ===== ФУНКЦИИ ДЛЯ СТРАНИЦЫ ТОВАРОВ =====
     const productsData = [
       { id:1, title:"Часы Premium Black", images:[
         "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
@@ -2621,7 +2621,7 @@
       loadProductsData(category, document.getElementById('searchInputProducts').value);
       document.getElementById('categoriesDropdown').classList.remove('active');
     };
-
+    
     window.hideProductsPage = hideProductsPage;
   </script>
 </body>
