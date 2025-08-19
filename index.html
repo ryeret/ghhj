@@ -2389,6 +2389,78 @@
     overlay.style.display = 'none';
   }
 
+// Логика календаря расходов
+  let currentDate = new Date();
+  
+  function initExpensesCalendar() {
+    updateCalendar();
+    // Здесь можно добавить загрузку данных о расходах
+  }
+  
+  function updateCalendar() {
+    const year = currentDate.getFullYear();
+    const month = currentDate.getMonth();
+    
+    document.getElementById('current-month').textContent = 
+      new Date(year, month).toLocaleDateString('ru-RU', { 
+        month: 'long', 
+        year: 'numeric' 
+      });
+    
+    const firstDay = new Date(year, month, 1);
+    const lastDay = new Date(year, month + 1, 0);
+    
+    const calendarBody = document.getElementById('calendar-body');
+    calendarBody.innerHTML = '';
+    
+    let date = 1;
+    for (let i = 0; i < 6; i++) {
+      if (date > lastDay.getDate()) break;
+      
+      const row = document.createElement('tr');
+      
+      for (let j = 0; j < 7; j++) {
+        const cell = document.createElement('td');
+        
+        if (i === 0 && j < firstDay.getDay()) {
+          // Пустые ячейки перед первым днем месяца
+          cell.textContent = '';
+        } else if (date > lastDay.getDate()) {
+          // Пустые ячейки после последнего дня месяца
+          cell.textContent = '';
+        } else {
+          cell.textContent = date;
+          
+          // Подсветка текущего дня
+          const today = new Date();
+          if (date === today.getDate() && 
+              month === today.getMonth() && 
+              year === today.getFullYear()) {
+            cell.style.border = '1px solid #d4af37';
+            cell.style.boxShadow = '0 0 5px #d4af37';
+          }
+          
+          date++;
+        }
+        row.appendChild(cell);
+      }
+      
+      calendarBody.appendChild(row);
+    }
+  }
+  
+  function prevMonth() {
+    currentDate.setMonth(currentDate.getMonth() - 1);
+    updateCalendar();
+    triggerVibration();
+  }
+  
+  function nextMonth() {
+    currentDate.setMonth(currentDate.getMonth() + 1);
+    updateCalendar();
+    triggerVibration();
+  }
+
     // Навигация между страницами
     const mainPage = document.getElementById('main-page');
     const cabinetPage = document.getElementById('cabinet-page');
@@ -2605,6 +2677,7 @@
       console.log("Action:", action);
     }
   }
+
 
   // ===== ФУНКЦИОНАЛ СВАЙПА ДЛЯ ОТКРЫТИЯ СТРАНИЦЫ ТОВАРОВ =====
     let startY, currentY, isSwipingUp = false;
