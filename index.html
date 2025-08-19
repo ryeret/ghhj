@@ -2347,111 +2347,6 @@
       }
     }
 
-    
-
-    // ===== ФУНКЦИИ ДЛЯ СТРАНИЦЫ ТОВАРОВ =====
-    const productsData = [
-      { id:1, title:"Часы Premium Black", images:[
-        "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-      ], description:"Роскошные черные часы с автоматическим механизмом.", price:24990, category:"watches", rating:4.8, reviews:24 },
-      { id:2, title:"Наушники Pro Sound", images:[
-        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-      ], description:"Беспроводные наушники с активным шумоподавлением.", price:18990, category:"headphones", rating:4.5, reviews:18 },
-      { id:3, title:"Кольцо Diamond", images:[
-        "https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-      ], description:"Элегантное серебряное кольцо с бриллиантом.", price:42500, category:"jewelry", rating:4.9, reviews:32 },
-      { id:4, title:"Умные часы Pro", images:[
-        "https://images.unsplash.com/photo-1558379850-823f103f866a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-      ], description:"Умные часы с функцией мониторинга здоровья.", price:32990, category:"watches", rating:4.7, reviews:15 },
-      { id:5, title:"Беспроводные наушники Air", images:[
-        "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1578319439584-104c94d37305?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-      ], description:"Компактные беспроводные наушники.", price:15990, category:"headphones", rating:4.3, reviews:22 },
-      { id:6, title:"Футболка Classic Black", images:[
-        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
-        "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
-      ], description:"Классическая черная футболка из 100% хлопка.", price:2990, category:"tshirts", rating:4.2, reviews:45 }
-    ];
-    
-    let activeCategory = 'all';
-    
-    function loadProductsData(category = activeCategory, searchQuery = '') {
-      const loadingSpinner = document.getElementById('loadingSpinner');
-      const productsFeed = document.getElementById('productsFeed');
-      
-      loadingSpinner.style.display = 'block';
-      productsFeed.innerHTML = '';
-      
-      // Имитация загрузки
-      setTimeout(() => {
-        loadingSpinner.style.display = 'none';
-        
-        let filtered = productsData.filter(p => {
-          const matchesCategory = category === 'all' || p.category === category;
-          if (searchQuery.trim() === '') return matchesCategory;
-          
-          const q = searchQuery.toLowerCase();
-          return p.title.toLowerCase().includes(q) || 
-                 p.description.toLowerCase().includes(q);
-        });
-        
-        renderProducts(filtered);
-      }, 800);
-    }
-    
-    function renderProducts(productsList) {
-      const productsFeed = document.getElementById('productsFeed');
-      productsFeed.innerHTML = '';
-      
-      if (productsList.length === 0) {
-        document.getElementById('emptyState').style.display = 'block';
-        return;
-      }
-      
-      document.getElementById('emptyState').style.display = 'none';
-      
-      productsList.forEach(product => {
-        const productCard = document.createElement('div');
-        productCard.className = 'product-card';
-        productCard.innerHTML = `
-          <img src="${product.images[0]}" class="product-image" alt="${product.title}">
-          <div class="product-content">
-            <h3 class="product-title">${product.title}</h3>
-            <div class="product-price">${product.price.toLocaleString()} ₽</div>
-          </div>
-        `;
-        productCard.addEventListener('click', () => {
-          // Здесь можно открыть детальную страницу товара
-          alert(`Открываем ${product.title}`);
-        });
-        productsFeed.appendChild(productCard);
-      });
-    }
-    
-    // Инициализация страницы товаров
-    document.getElementById('searchInputProducts').addEventListener('input', (e) => {
-      loadProductsData(activeCategory, e.target.value);
-    });
-    
-    document.getElementById('categoriesToggle').addEventListener('click', () => {
-      document.getElementById('categoriesDropdown').classList.toggle('active');
-    });
-    
-    document.getElementById('sortSelect').addEventListener('change', () => {
-      loadProductsData(activeCategory, document.getElementById('searchInputProducts').value);
-    });
-    
-    window.filterProducts = function(category) {
-      activeCategory = category;
-      loadProductsData(category, document.getElementById('searchInputProducts').value);
-      document.getElementById('categoriesDropdown').classList.remove('active');
-    };
-
-    
 // Управление страницами
   function showExpensesPage() {
     document.getElementById('expenses-page').style.display = 'block';
@@ -2696,6 +2591,108 @@
     document.addEventListener('touchend', () => {
       isSwipingUp = false;
     });
+
+// ===== ФУНКЦИИ ДЛЯ СТРАНИЦЫ ТОВАРОВ =====
+    const productsData = [
+      { id:1, title:"Часы Premium Black", images:[
+        "https://images.unsplash.com/photo-1524805444758-089113d48a6d?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+      ], description:"Роскошные черные часы с автоматическим механизмом.", price:24990, category:"watches", rating:4.8, reviews:24 },
+      { id:2, title:"Наушники Pro Sound", images:[
+        "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1590658268037-6bf12165a8df?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+      ], description:"Беспроводные наушники с активным шумоподавлением.", price:18990, category:"headphones", rating:4.5, reviews:18 },
+      { id:3, title:"Кольцо Diamond", images:[
+        "https://images.unsplash.com/photo-1605100804763-247f67b3557e?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1599643478518-a784e5dc4c8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+      ], description:"Элегантное серебряное кольцо с бриллиантом.", price:42500, category:"jewelry", rating:4.9, reviews:32 },
+      { id:4, title:"Умные часы Pro", images:[
+        "https://images.unsplash.com/photo-1558379850-823f103f866a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1579586337278-3befd40fd17a?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+      ], description:"Умные часы с функцией мониторинга здоровья.", price:32990, category:"watches", rating:4.7, reviews:15 },
+      { id:5, title:"Беспроводные наушники Air", images:[
+        "https://images.unsplash.com/photo-1572569511254-d8f925fe2cbb?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1578319439584-104c94d37305?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+      ], description:"Компактные беспроводные наушники.", price:15990, category:"headphones", rating:4.3, reviews:22 },
+      { id:6, title:"Футболка Classic Black", images:[
+        "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80",
+        "https://images.unsplash.com/photo-1527719327859-c6ce80353573?ixlib=rb-1.2.1&auto=format&fit=crop&w=600&q=80"
+      ], description:"Классическая черная футболка из 100% хлопка.", price:2990, category:"tshirts", rating:4.2, reviews:45 }
+    ];
+    
+    let activeCategory = 'all';
+    
+    function loadProductsData(category = activeCategory, searchQuery = '') {
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      const productsFeed = document.getElementById('productsFeed');
+      
+      loadingSpinner.style.display = 'block';
+      productsFeed.innerHTML = '';
+      
+      // Имитация загрузки
+      setTimeout(() => {
+        loadingSpinner.style.display = 'none';
+        
+        let filtered = productsData.filter(p => {
+          const matchesCategory = category === 'all' || p.category === category;
+          if (searchQuery.trim() === '') return matchesCategory;
+          
+          const q = searchQuery.toLowerCase();
+          return p.title.toLowerCase().includes(q) || 
+                 p.description.toLowerCase().includes(q);
+        });
+        
+        renderProducts(filtered);
+      }, 800);
+    }
+    
+    function renderProducts(productsList) {
+      const productsFeed = document.getElementById('productsFeed');
+      productsFeed.innerHTML = '';
+      
+      if (productsList.length === 0) {
+        document.getElementById('emptyState').style.display = 'block';
+        return;
+      }
+      
+      document.getElementById('emptyState').style.display = 'none';
+      
+      productsList.forEach(product => {
+        const productCard = document.createElement('div');
+        productCard.className = 'product-card';
+        productCard.innerHTML = `
+          <img src="${product.images[0]}" class="product-image" alt="${product.title}">
+          <div class="product-content">
+            <h3 class="product-title">${product.title}</h3>
+            <div class="product-price">${product.price.toLocaleString()} ₽</div>
+          </div>
+        `;
+        productCard.addEventListener('click', () => {
+          // Здесь можно открыть детальную страницу товара
+          alert(`Открываем ${product.title}`);
+        });
+        productsFeed.appendChild(productCard);
+      });
+    }
+    
+    // Инициализация страницы товаров
+    document.getElementById('searchInputProducts').addEventListener('input', (e) => {
+      loadProductsData(activeCategory, e.target.value);
+    });
+    
+    document.getElementById('categoriesToggle').addEventListener('click', () => {
+      document.getElementById('categoriesDropdown').classList.toggle('active');
+    });
+    
+    document.getElementById('sortSelect').addEventListener('change', () => {
+      loadProductsData(activeCategory, document.getElementById('searchInputProducts').value);
+    });
+    
+    window.filterProducts = function(category) {
+      activeCategory = category;
+      loadProductsData(category, document.getElementById('searchInputProducts').value);
+      document.getElementById('categoriesDropdown').classList.remove('active');
+    };
 
     window.hideProductsPage = hideProductsPage;
   </script>
