@@ -639,7 +639,7 @@
       color: #b38e1e;
     }
 
-    #custom-popup-overlay,
+    /* Стили для попапов карьеры */
     #career-popup-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -650,7 +650,7 @@
       z-index: 9999;
     }
 
-    #custom-popup, #career-popup {
+    #career-popup {
       background: #1A1A1A;
       border: 3px solid #ffffff;
       border-radius: 18px;
@@ -663,14 +663,14 @@
       user-select: none;
     }
 
-    #custom-popup h2, #career-popup h2 {
+    #career-popup h2 {
       margin: 0 0 16px 0;
       font-size: 20px;
       color: #ffffff;
       text-shadow: 0 0 5px #cccccc;
     }
 
-    #custom-popup p, #career-popup p {
+    #career-popup p {
       font-size: 16px;
       color: #ffffff;
       margin: 0 0 24px 0;
@@ -678,7 +678,7 @@
       font-weight: 400;
     }
 
-    #custom-popup button, #career-popup button {
+    #career-popup button {
       background: #ffffff;
       border: none;
       border-radius: 12px;
@@ -1678,15 +1678,7 @@
     </div>
   </div>
 
-  <!-- Попапы для каюты -->
-  <div id="custom-popup-overlay">
-    <div id="custom-popup">
-      <h2>ПИРАТ, ТЫ ЕЩЕ НИЧЕГО НЕ КУПИЛ</h2>
-      <p>твоя скидка 0%\n\nЧтобы перейти на следующий уровень, соверши хотя бы 1 покупку</p>
-      <button id="close-popup-btn">Понял!</button>
-    </div>
-  </div>
-
+   <!-- Попап для карьеры -->
   <div id="career-popup-overlay">
     <div id="career-popup">
       <h2 id="career-title">Заголовок</h2>
@@ -2158,50 +2150,42 @@
 
     updateDots();
 
-    // Функционал каюты
-    const careerDescriptions = {
-      "Юнга": "Ты только что прибыл на корабль! Начало пиратского пути.",
-      "Крыса трюма": "Ты уже освоился на судне, но пока прячешься в трюме.",
-      "Корсар": "Ты стал настоящим пиратом и уже участвуешь в абордаже.",
-      "Штурман": "Ты прокладываешь курс команды и ведёшь корабль вперёд.",
-      "Бывалый пёс": "Ты повидал штормы, битвы и сокровища. Опытный ветеран!"
-    };
+    // Логика пиратской карьеры
+  const careerDescriptions = {
+    "Юнга": "Ты только что прибыл на корабль! Начало пиратского пути.",
+    "Крыса трюма": "Ты уже освоился на судне, но пока прячешься в трюме.",
+    "Корсар": "Ты стал настоящим пиратом и уже участвуешь в абордаже.",
+    "Штурман": "Ты прокладываешь курс команды и ведёшь корабль вперёд.",
+    "Бывалый пёс": "Ты повидал штормы, битвы и сокровища. Опытный ветеран!"
+  };
 
-    function triggerVibration() {
-      try {
-        if (window.Telegram?.WebApp?.HapticFeedback?.impactOccurred) {
-          Telegram.WebApp.HapticFeedback.impactOccurred('light');
-        }
-      } catch (e) {
-        console.warn('Vibration not supported', e);
-      }
-    }
+  function changeLevel(level, buttonElement) {
+    const levelLabel = document.getElementById('level-label');
+    levelLabel.textContent = level;
 
-    function changeLevel(level, buttonElement) {
-      const levelLabel = document.getElementById('level-label');
-      levelLabel.textContent = level;
+    const buttons = document.querySelectorAll('.career-button');
+    buttons.forEach(btn => btn.classList.remove('active'));
+    buttonElement.classList.add('active');
 
-      const buttons = document.querySelectorAll('.career-button');
-      buttons.forEach(btn => btn.classList.remove('active'));
-      buttonElement.classList.add('active');
+    // Показываем попап с описанием уровня
+    openCareerPopup(level);
+    triggerVibration();
+  }
 
-      triggerVibration();
-    }
+  function openCareerPopup(level) {
+    const overlay = document.getElementById('career-popup-overlay');
+    const title = document.getElementById('career-title');
+    const text = document.getElementById('career-text');
+    title.textContent = level;
+    text.textContent = careerDescriptions[level] || 'Информация отсутствует';
+    overlay.style.display = 'flex';
+    triggerVibration();
+  }
 
-    function openCareerPopup(level) {
-      const overlay = document.getElementById('career-popup-overlay');
-      const title = document.getElementById('career-title');
-      const text = document.getElementById('career-text');
-      title.textContent = level;
-      text.textContent = careerDescriptions[level] || 'Информация отсутствует';
-      overlay.style.display = 'flex';
-      triggerVibration();
-    }
-
-    function closeCareerPopup() {
-      const overlay = document.getElementById('career-popup-overlay');
-      overlay.style.display = 'none';
-    }
+  function closeCareerPopup() {
+    const overlay = document.getElementById('career-popup-overlay');
+    overlay.style.display = 'none';
+  }
 
     // Навигация между страницами
     const mainPage = document.getElementById('main-page');
