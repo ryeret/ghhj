@@ -1170,6 +1170,126 @@
   color: #ffffff; /* Белый текст */
   border: 1px solid #333333; /* Граница */
 }
+    /* Стили для попапов карьеры */
+    #career-popup-overlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(10,10,10,0.85);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    #career-popup {
+      background: #1A1A1A;
+      border: 3px solid #ffffff;
+      border-radius: 18px;
+      max-width: 320px;
+      padding: 24px 28px;
+      text-align: center;
+      color: #ffffff;
+      box-shadow: 0 0 15px #ffffff;
+      font-weight: 600;
+      user-select: none;
+    }
+
+    #career-popup h2 {
+      margin: 0 0 16px 0;
+      font-size: 20px;
+      color: #ffffff;
+      text-shadow: 0 0 5px #cccccc;
+    }
+
+    #career-popup p {
+      font-size: 16px;
+      color: #ffffff;
+      margin: 0 0 24px 0;
+      white-space: pre-line;
+      font-weight: 400;
+    }
+
+    #career-popup button {
+      background: #ffffff;
+      border: none;
+      border-radius: 12px;
+      padding: 12px 24px;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1A1A1A;
+      cursor: pointer;
+      box-shadow: 0 0 8px #ffffff;
+    }
+
+    /* Анимации */
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes breath {
+      0%, 100% { box-shadow: 0 4px 15px rgba(0, 122, 255, 0.3); }
+      50% { box-shadow: 0 4px 25px rgba(0, 122, 255, 0.5); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(0.95); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes unflip {
+      0% { transform: rotateY(180deg); }
+      100% { transform: rotateY(0deg); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(30px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes scaleIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    /* Payment animation */
+    @keyframes paymentSuccess {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); box-shadow: 0 0 20px rgba(0, 122, 255, 0.5); }
+      100% { transform: scale(1); }
+    }
+
+    .payment-success {
+      animation: paymentSuccess 0.6s var(--ios-bounce);
+    }
+
+    /* Card holder input fix */
+    .card-holder-input {
+      text-transform: uppercase;
+    }
+
+    @media (min-width: 481px) {
+      .carousel {
+        padding-left: calc((100% - 480px)/2 + 12px);
+        padding-right: calc((100% - 480px)/2 + 12px);
+      }
+    }
  /* Стили для страницы управления профилем */
     #profile-page {
       position: fixed;
@@ -1975,41 +2095,111 @@
   <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
 <script>
-    // Инициализация данных пользователя Telegram
-    function initUserData() {
-      // Проверяем, что WebApp Telegram доступен
-      if (window.Telegram && Telegram.WebApp) {
-        const user = Telegram.WebApp.initDataUnsafe?.user;
+
+     // Инициализация данных пользователя Telegram
+  function initUserData() {
+    // Проверяем, что WebApp Telegram доступен
+    if (window.Telegram && Telegram.WebApp) {
+      console.log("Telegram WebApp detected");
+      
+      // Инициализируем WebApp
+      Telegram.WebApp.ready();
+      Telegram.WebApp.expand();
+      
+      // Получаем данные пользователя
+      const user = Telegram.WebApp.initDataUnsafe?.user;
+      
+      if (user) {
+        console.log("User data:", user);
         
-        if (user) {
-          // Устанавливаем имя пользователя
-          const username = user.first_name || 'Пират';
-          document.getElementById('username').textContent = username;
-          document.getElementById('profile-username').textContent = username;
+        // Устанавливаем имя пользователя
+        const username = user.first_name || user.username || 'Пират';
+        document.getElementById('username').textContent = username;
+        document.getElementById('profile-username').textContent = username;
+        
+        // Устанавливаем аватар
+        const avatarUrl = user.photo_url;
+        const avatarElement = document.getElementById('avatar');
+        const profileAvatarElement = document.getElementById('profile-avatar-img');
+        
+        if (avatarUrl) {
+          console.log("Setting avatar from URL:", avatarUrl);
+          avatarElement.style.backgroundImage = `url(${avatarUrl})`;
+          avatarElement.style.backgroundSize = 'cover';
+          profileAvatarElement.style.backgroundImage = `url(${avatarUrl})`;
+          profileAvatarElement.style.backgroundSize = 'cover';
+        } else {
+          // Дефолтный аватар, если фото нет
+          console.log("Using default avatar");
+          const defaultAvatarColor = `hsl(${Math.floor(Math.random() * 360)}, 70%, 50%)`;
+          avatarElement.innerHTML = 
+            `<svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="70" cy="70" r="70" fill="${defaultAvatarColor}"/>
+              <text x="70" y="80" font-family="Arial" font-size="60" fill="white" text-anchor="middle" dominant-baseline="middle">
+                ${username.charAt(0).toUpperCase()}
+              </text>
+            </svg>`;
           
-          // Устанавливаем аватар
-          const avatarUrl = user.photo_url;
-          const avatarElement = document.getElementById('avatar');
-          const profileAvatarElement = document.getElementById('profile-avatar-img');
-          
-          if (avatarUrl) {
-            avatarElement.innerHTML = `<img src="${avatarUrl}" width="140" height="140" style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;" />`;
-            profileAvatarElement.innerHTML = `<img src="${avatarUrl}" width="60" height="60" style="border-radius: 50%; width: 100%; height: 100%; object-fit: cover;" />`;
-          } else {
-            // Дефолтный аватар, если фото нет
-            const defaultAvatar = `
-              <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
-                <circle cx="70" cy="70" r="70" fill="#2E2E2E"/>
-                <text x="70" y="80" font-family="Arial" font-size="60" fill="white" text-anchor="middle" dominant-baseline="middle">${username.charAt(0).toUpperCase()}</text>
-              </svg>
-            `;
-            avatarElement.innerHTML = defaultAvatar;
-            profileAvatarElement.innerHTML = defaultAvatar.replace('140', '60').replace('70', '30').replace('60', '30').replace('80', '40');
-          }
+          profileAvatarElement.innerHTML = 
+            `<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="30" cy="30" r="30" fill="${defaultAvatarColor}"/>
+              <text x="30" y="35" font-family="Arial" font-size="30" fill="white" text-anchor="middle" dominant-baseline="middle">
+                ${username.charAt(0).toUpperCase()}
+              </text>
+            </svg>`;
         }
+        
+        // Устанавливаем дату присоединения (примерная)
+        const joinDate = new Date(user.id * 1000);
+        document.getElementById('join-date').textContent = joinDate.toLocaleDateString('ru-RU');
+        
+        // Устанавливаем номер профиля (первые 4 цифры ID)
+        document.getElementById('profile-number').textContent = String(user.id).slice(0, 4);
+        
+        // Настраиваем кнопку "Назад" в Telegram
+        Telegram.WebApp.BackButton.show();
+        Telegram.WebApp.BackButton.onClick(handleBackButton);
+        
+      } else {
+        console.log("No user data available");
+        setupDemoData();
       }
+    } else {
+      console.log("Not in Telegram WebApp, using demo data");
+      setupDemoData();
     }
 
+    // Загрузка сохраненного баланса
+    const savedBalance = localStorage.getItem('userBalance');
+    if (savedBalance) {
+      document.getElementById('balance').textContent = savedBalance;
+    } else {
+      localStorage.setItem('userBalance', '0');
+      document.getElementById('balance').textContent = '0';
+    }
+  }
+
+  function setupDemoData() {
+    const username = "Капитан Джек";
+    document.getElementById('username').textContent = username;
+    document.getElementById('profile-username').textContent = username;
+    
+    const avatarElement = document.getElementById('avatar');
+    const profileAvatarElement = document.getElementById('profile-avatar-img');
+    
+    avatarElement.innerHTML = 
+      `<svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="70" cy="70" r="70" fill="#2E2E2E"/>
+        <text x="70" y="80" font-family="Arial" font-size="60" fill="white" text-anchor="middle" dominant-baseline="middle">К</text>
+      </svg>`;
+    
+    profileAvatarElement.innerHTML = 
+      `<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="30" cy="30" r="30" fill="#2E2E2E"/>
+        <text x="30" y="35" font-family="Arial" font-size="30" fill="white" text-anchor="middle" dominant-baseline="middle">К</text>
+      </svg>`;
+  }
+    
     // Вызываем инициализацию при загрузке
     document.addEventListener('DOMContentLoaded', function() {
       initUserData();
@@ -2416,8 +2606,7 @@
     }
   }
 
-
-     // ===== ФУНКЦИОНАЛ СВАЙПА ДЛЯ ОТКРЫТИЯ СТРАНИЦЫ ТОВАРОВ =====
+  // ===== ФУНКЦИОНАЛ СВАЙПА ДЛЯ ОТКРЫТИЯ СТРАНИЦЫ ТОВАРОВ =====
     let startY, currentY, isSwipingUp = false;
     let productsPageVisible = false;
     const productsPage = document.getElementById('products-page');
